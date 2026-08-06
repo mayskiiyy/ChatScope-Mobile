@@ -1,11 +1,61 @@
-# ChatfilterARZmobile
-Скрипт увеличивает чат лог в игре и удаляет лишний мусор с чата который вам не нужен [Для мобильного клиента]
-
-Команда /ch - открывает чат лог, сверху вы можете увидеть удобный поиск по словам, стандартный размер чат лога 2000 строк. Если у вас лагает из-за этого, сделайте меньше в коде, это специально отмечено внутри скрипта. Чат лог можно разбить на папки с помощью команды /cf ⬇️
-
-Команда /cf - открывает меню фильтров. GLOBAL - скрывает строки чата со всех чатов, тот что видет игрок и чат лог. Visual - скрывает только в чате игрока, остаётся в чат логе. History Hide- скрывает только в чат логе. Вводить нужно точно строку в строку ввода [скопировать точно можно в /ch кликнув по сообщению], если у вас есть динамические значения, к примеру ник, поставьте вместо ника "*", пример: Игрок * перевел вам 50$. 
-
-В меню /cf, вы также можете разделить чат лог на папки, например вип чат, рекламы и т.п, и видеть только то что вам нужно. Если вам нужно ввести сразу несколько значений для одной папки, делайте это через пробел как показано в меню.
-
-# Установка
-Если вы пользователь Arizona Tools (для админов), просто закиньте скрипт в директорию monetloader, обычно по пути Android/media/папка с игрой/monetloader
+ChatScope Mobile
+ChatScope Mobile is a lightweight chat history and filtering script for SA-MP mobile clients that support MoonLoader-compatible Lua scripts, such as MonetLoader-based setups.
+It keeps a larger searchable chat history, lets you hide unwanted messages, and organizes messages into custom folders using simple wildcard patterns.
+Features
+Searchable chat history with up to 2,000 stored messages per session
+Three independent filter modes
+Custom folders for VIP chat, advertisements, reports, or any other message category
+`*` wildcard support for dynamic values such as player names, IDs, or amounts
+One-tap message copying from the history window
+Persistent configuration stored in `config/chatscope_mobile.cfg`
+Automatic migration from the old `config/simple_cf.cfg` file
+Commands
+Command	Description
+`/ch`	Opens or closes the chat history window
+`/cf`	Opens or closes the filter and folder settings
+Filter modes
+Global
+Hides matching messages both from the in-game chat and from ChatScope history.
+Visual only
+Hides matching messages from the in-game chat but keeps them in ChatScope history.
+History only
+Keeps matching messages in the in-game chat but excludes them from ChatScope history.
+Pattern syntax
+Patterns match the entire message. Use `*` to replace any dynamic part.
+Examples:
+```text
+Player * transferred $* to you.
+*VIP*
+[Advertisement] *
+```
+All other characters are treated literally, so punctuation such as `.`, `+`, `?`, `[` and `]` does not need manual escaping.
+Folders
+Folders show only messages matching one of their patterns. Separate multiple patterns with a semicolon:
+```text
+*VIP*; *PREMIUM*; [Family] *
+```
+The semicolon format allows individual patterns to contain spaces. Existing folders created with the original space-separated format remain supported for backward compatibility.
+Installation
+Make sure your mobile SA-MP client has a MoonLoader-compatible Lua environment and the required libraries:
+`mimgui`
+`encoding`
+`lib.samp.events`
+Copy `chatscope_mobile.lua` into your script loader directory.
+For common MonetLoader installations, this directory is usually located under:
+```text
+Android/media/<your-game-package>/monetloader
+```
+Start the game and use `/ch` or `/cf`.
+The exact installation path may differ depending on the client and Android version.
+Configuration
+ChatScope creates this file automatically:
+```text
+config/chatscope_mobile.cfg
+```
+The configuration is saved whenever a filter or folder is added or removed. If an older `simple_cf.cfg` configuration exists, ChatScope imports it on the first launch.
+Performance
+The default history limit is 2,000 messages. On low-end devices, reduce `MAX_HISTORY_LINES` near the top of `chatscope_mobile.lua`.
+Compatibility notes
+ChatScope Mobile is designed around MoonLoader-compatible APIs and SA-MP event hooks. Compatibility can vary between mobile clients and loader builds. If the script does not start, check the loader log for a missing library or unsupported API.
+Credits
+Original script by Mayskiy. Refactored and documented as ChatScope Mobile.
